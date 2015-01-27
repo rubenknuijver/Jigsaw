@@ -1,0 +1,22 @@
+﻿[
+    {
+        "Id":  "{582052AA-D48D-48F9-89FD-3B02E670F896}",
+        "Text": "Hello World!",
+        "Sequence": 234
+    },
+    {
+        "Id":  "{FA59217F-DBF4-444B-ADDE-6428F1C6B2CA}",
+        "Text": "Wat een goed verhaal..",
+        "Sequence": 56
+    },
+    {
+        "Id":  "{1996BB96-3148-404E-9078-F6A319CBA144}",
+        "Text": "Leuke dingen",
+        "Sequence": 9778
+    },
+    {
+        "Id":  "{BA4F4903-8D39-48A9-B476-0908802BCCAF}",
+        "Text": "Ja, lekker testen.",
+        "Sequence": 1
+    }
+]
