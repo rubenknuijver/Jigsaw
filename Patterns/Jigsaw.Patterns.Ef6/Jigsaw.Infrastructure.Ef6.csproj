@@ -62,6 +62,9 @@
     <Compile Include="Conventions\TableNameConvention.cs" />
     <Compile Include="CustomSqlServerMigrationSqlGenerator.cs" />
     <Compile Include="DataContext.cs" />
+    <Compile Include="DataStoreUnitOfWork.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Fakes\FakeDbContext.cs" />
     <Compile Include="Fakes\FakeDbSet.cs" />
     <Compile Include="Fakes\FakeFieldMapping.cs" />
