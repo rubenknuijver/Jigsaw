@@ -61,6 +61,7 @@
     <Compile Include="Conventions\IdColumnConvention.cs" />
     <Compile Include="Conventions\TableNameConvention.cs" />
     <Compile Include="CustomSqlServerMigrationSqlGenerator.cs" />
+    <Compile Include="DataContext%271.cs" />
     <Compile Include="DataContext.cs" />
     <Compile Include="DataStoreUnitOfWork.cs">
       <SubType>Code</SubType>
@@ -70,6 +71,7 @@
     <Compile Include="Fakes\FakeFieldMapping.cs" />
     <Compile Include="Fakes\FakeFieldMapping`1.cs" />
     <Compile Include="Fakes\IFakeDbContext.cs" />
+    <Compile Include="IDbContext.cs" />
     <Compile Include="LinqKit\ExpandableDbAsyncEnumerator.cs" />
     <Compile Include="LinqKit\ExpandableQuery.cs" />
     <Compile Include="LinqKit\ExpressionExpander.cs" />
