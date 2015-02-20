@@ -20,6 +20,11 @@ namespace Jigsaw.Infrastructure.Ef6
 
             ((IDbMigration)migration).AddOperation(op);
         }
+
+        public static void AuthorizeOnDatabase(this DbMigration migration, string databaseName, string username)
+        {
+            ((IDbMigration)migration).AddOperation(new DatabaseAuthorizeOperation(databaseName, username));
+        }
     }
 
 }

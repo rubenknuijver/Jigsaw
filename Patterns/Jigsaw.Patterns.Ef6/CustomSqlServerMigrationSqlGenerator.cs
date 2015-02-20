@@ -27,26 +27,8 @@ namespace Jigsaw.Infrastructure.Ef6
 
         protected override void Generate(MigrationOperation migrationOperation)
         {
-            var op = migrationOperation as CreateFullTextIndexOperation;
-            if (op != null) {
-                using (var writer = Writer()) {
-                    writer.WriteLine("IF(NOT EXISTS(SELECT * FROM SYS.fulltext_catalogs WHERE is_default = 1))");
-                    writer.WriteLine("BEGIN");
-                    writer.WriteLine("    CREATE FULLTEXT CATALOG DefaultFullTextCatalog AS DEFAULT");
-                    writer.WriteLine("END");
-
-                    writer.WriteLine();
-
-                    writer.WriteLine("CREATE FULLTEXT INDEX ON {0} ({1})", Name(op.Table), string.Join(", ", op.Columns.Select(c => Quote(c))));
-                    writer.WriteLine("KEY INDEX {0}", Quote(op.Index));
-                    writer.WriteLine("WITH CHANGE_TRACKING AUTO");
-
-                    Statement(writer.InnerWriter.ToString(), suppressTransaction: true);
-                }
-            }
-            else {
-                base.Generate(migrationOperation);
-            }
+            this.Generate((dynamic)migrationOperation);
+            base.Generate(migrationOperation);
         }
 
         private void SetDefaultValue(System.Data.Entity.Migrations.Model.ColumnModel columnModel)
@@ -56,6 +38,36 @@ namespace Jigsaw.Infrastructure.Ef6
             }
             if (columnModel.ClrType == typeof(Guid) && columnModel.Name.EndsWith("Id")) {
                 columnModel.DefaultValueSql = "NEWID()";
+            }
+        }
+
+        public virtual void Generate(CreateFullTextIndexOperation createFullTextIndexOperation)
+        {
+            using (var writer = Writer()) {
+                writer.WriteLine("IF(NOT EXISTS(SELECT * FROM SYS.fulltext_catalogs WHERE is_default = 1))");
+                writer.WriteLine("BEGIN");
+                writer.WriteLine("    CREATE FULLTEXT CATALOG DefaultFullTextCatalog AS DEFAULT");
+                writer.WriteLine("END");
+
+                writer.WriteLine();
+
+                writer.WriteLine("CREATE FULLTEXT INDEX ON {0} ({1})", Name(createFullTextIndexOperation.Table), string.Join(", ", createFullTextIndexOperation.Columns.Select(c => Quote(c))));
+                writer.WriteLine("KEY INDEX {0}", Quote(createFullTextIndexOperation.Index));
+                writer.WriteLine("WITH CHANGE_TRACKING AUTO");
+
+                Statement(writer.InnerWriter.ToString(), suppressTransaction: true);
+            }
+        }
+
+        public virtual void Generate(DatabaseAuthorizeOperation databaseAuthorizeOperation)
+        {
+            using (var writer = Writer()) {
+                writer.WriteLine("ALTER AUTHORIZATION ON DATABASE::{0} TO {1}",
+                    Name(databaseAuthorizeOperation.DatabaseName),
+                    databaseAuthorizeOperation.UserName
+                    );
+
+                this.Statement(writer);
             }
         }
     }
